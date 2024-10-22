@@ -29,7 +29,8 @@ class DetailScreen extends StatelessWidget {
               ),
               //padding back button
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.deepPurple[100]?.withOpacity(0.8),
@@ -38,35 +39,53 @@ class DetailScreen extends StatelessWidget {
                   child: IconButton(
                       onPressed: () {},
                       icon: const Icon(
-                          Icons.arrow_back,
-                      )
-                  ),
+                        Icons.arrow_back,
+                      )),
                 ),
               )
             ],
           ),
-        //detail info
+          //detail info
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 SizedBox(height: 16),
-              // info atas(nama candi dan tombol favorit)
+                // info atas(nama candi dan tombol favorit)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(candi.name,
+                    Text(
+                      candi.name,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                      ) ,
+                      ),
                     ),
-                    IconButton(onPressed: (){},
-                        icon: Icon(Icons.favorite_border))
+                    IconButton(
+                        onPressed: () {}, icon: Icon(Icons.favorite_border))
                   ],
-                )
-              // info tengah (lokasi, dibangun, tipe)
-              // info bawah (deskripsi)
+                ),
+                // info tengah (lokasi, dibangun, tipe)
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Icon(Icons.place, color: Colors.red),
+                    SizedBox(width: 8),
+                    SizedBox(
+                      width: 70,
+                      child: Text('Lokasi', style: TextStyle(
+                        fontWeight: FontWeight.bold),),),
+                    Text(': ${candi.location}'),
+                  ],
+                ),
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+                // info bawah (deskripsi)
               ],
             ),
           )
