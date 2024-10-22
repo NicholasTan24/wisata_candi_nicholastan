@@ -49,6 +49,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 16),
                 // info atas(nama candi dan tombol favorit)
@@ -80,11 +81,26 @@ class DetailScreen extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  children: [],
+                  children: [
+                    Icon(Icons.calendar_month, color: Colors.blue),
+                    SizedBox(width: 8),
+                    SizedBox(width: 70,
+                      child: Text('Dibangun', style: TextStyle(
+                        fontWeight: FontWeight.bold))),
+                    Text(': ${candi.built}'),
+                  ],),
+                Row(children: [
+                    Icon(Icons.house, color: Colors.green),
+                    SizedBox(width:8),
+                    SizedBox(width:70,
+                      child: Text('Tipe', style: TextStyle(
+                        fontWeight: FontWeight.bold))),
+                    Text(': ${candi.type}'),
+                  ],
                 ),
-                Row(
-                  children: [],
-                ),
+                SizedBox(height: 16),
+                Divider(color: Colors.deepPurple.shade100),
+                SizedBox(height: 16),
                 // info bawah (deskripsi)
               ],
             ),
