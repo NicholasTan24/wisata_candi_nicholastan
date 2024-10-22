@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wisata_candi_nicholastan/data/candi_data.dart';
+import 'package:wisata_candi_nicholastan/models/candi.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key, required Candi});
+  final Candi candi;
+
+  const DetailScreen({super.key, required this.candi});
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +12,35 @@ class DetailScreen extends StatelessWidget {
       body: Column(
         children: [
           Stack(
-              children: [
-                Image.asset(candi.imageAsset,)
-              ],
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    candi.imageAsset,
+                    width: double.infinity,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple[100]?.withOpacity(0.8),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                          Icons.arrow_back,
+                      )
+                  ),
+                ),
+              )
+            ],
           )
         ],
       ),
