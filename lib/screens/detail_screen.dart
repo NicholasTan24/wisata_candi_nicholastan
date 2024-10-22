@@ -11,8 +11,10 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
+          //detail header
           Stack(
             children: [
+              //padding image
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
@@ -25,6 +27,7 @@ class DetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              //padding back button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                 child: Container(
@@ -41,6 +44,31 @@ class DetailScreen extends StatelessWidget {
                 ),
               )
             ],
+          ),
+        //detail info
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                SizedBox(height: 16),
+              // info atas(nama candi dan tombol favorit)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(candi.name,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ) ,
+                    ),
+                    IconButton(onPressed: (){},
+                        icon: Icon(Icons.favorite_border))
+                  ],
+                )
+              // info tengah (lokasi, dibangun, tipe)
+              // info bawah (deskripsi)
+              ],
+            ),
           )
         ],
       ),
