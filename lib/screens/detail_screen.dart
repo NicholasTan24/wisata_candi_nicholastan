@@ -105,6 +105,7 @@ class DetailScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   // info bawah (deskripsi)
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(width: 70,
                         child: Text(
