@@ -104,6 +104,17 @@ class DetailScreen extends StatelessWidget {
                   Divider(color: Colors.deepPurple.shade100),
                   SizedBox(height: 16),
                   // info bawah (deskripsi)
+                  Column(
+                    children: [
+                      SizedBox(width: 70,
+                        child: Text(
+                            'Deskripsi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        )
+                      ),
+                      SizedBox(height: 16),
+                      Text('${candi.description}',textAlign: TextAlign.justify),
+                    ],
+                  )
                 ],
               ),
             ),
