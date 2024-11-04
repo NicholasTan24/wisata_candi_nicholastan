@@ -3,6 +3,7 @@ import 'package:wisata_candi_nicholastan/data/candi_data.dart';
 import 'package:wisata_candi_nicholastan/screens/detail_screen.dart';
 import 'package:wisata_candi_nicholastan/screens/profile_screen.dart';
 import 'package:wisata_candi_nicholastan/screens/sign_in_screen.dart';
+import 'package:wisata_candi_nicholastan/screens/sign_up_screen.dart';
 
 
 void main() {
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: ProfileScreen(),
       // home: DetailScreen(candi: candiList[0]),
-      home: SignInScreen(),
+      // home: SignInScreen(),
+      home: SignUpScreen(),
     );
   }
 }
