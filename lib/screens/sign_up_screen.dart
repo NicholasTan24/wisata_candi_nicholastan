@@ -6,10 +6,10 @@ class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   // TODO: 1. Deklarasikan variabel
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _fullnameController = TextEditingController();
@@ -77,11 +77,6 @@ class _SignInScreenState extends State<SignUpScreen> {
                     // TODO: 8. Pasang ElevatedButton Sign In
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {}, child: Text('Sign Up')),
-                    // TODO: 9.Pasang TextButton Sign Up
-                    SizedBox(height: 10),
-                    // TextButton(
-                    //     onPressed: (){},
-                    //     child: Text('Belum punya akun? Daftar di sini')),
                   ],
                 )),
           ),
