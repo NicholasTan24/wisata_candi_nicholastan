@@ -1,5 +1,8 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:wisata_candi_nicholastan/data/candi_data.dart';
+import 'package:wisata_candi_nicholastan/models/candi.dart';
 import 'package:wisata_candi_nicholastan/screens/detail_screen.dart';
 import 'package:wisata_candi_nicholastan/screens/favorite_screen.dart';
 import 'package:wisata_candi_nicholastan/screens/home_screen.dart';
@@ -9,8 +12,9 @@ import 'package:wisata_candi_nicholastan/screens/sign_in_screen.dart';
 import 'package:wisata_candi_nicholastan/screens/sign_up_screen.dart';
 
 
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,6 +41,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MainScreen(),
+      initialRoute: '/',
+      routes:{
+        '/':(context) => HomeScreen(),
+        '/DetailScreen' : (context) => DetailScreen(candi: ),
+
+      }
     );
   }
 }

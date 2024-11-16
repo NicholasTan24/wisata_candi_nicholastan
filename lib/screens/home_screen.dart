@@ -17,14 +17,19 @@ class _HomeScreenState extends State<HomeScreen> {
       // TODO: 1. Buat appBar dengan judul Wisata Candi
       appBar: AppBar(title: Text('Wisata Candi')),
       // TODO: 2. Buat body dengan GridView.builder
-      body: GridView.builder(
-          padding: EdgeInsets.all(8),
-          itemCount: candiList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
-          itemBuilder: (context,index){
-            return ItemCard(candi: candiList[index]);
-          }
-          ),
+      body: ElevatedButton(
+        onPressed:(){
+          Navigator.pushNamed(context, '/DetailScreen');
+        },
+        child: GridView.builder(
+            padding: EdgeInsets.all(8),
+            itemCount: candiList.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
+            itemBuilder: (context,index){
+              return ItemCard(candi: candiList[index]);
+            }
+            ),
+      ),
       // TODO: 3. Buat ItemCard sebagai return value dari GridView.builder
     );
   }
