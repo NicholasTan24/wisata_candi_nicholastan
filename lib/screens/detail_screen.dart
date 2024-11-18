@@ -10,11 +10,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ElevatedButton(
-        onPressed: (){
-          Navigator.pop(context, '/HomeScreen');
-        },
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Column(
             children: [
               //detail header
@@ -43,7 +39,9 @@ class DetailScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: const Icon(
                             Icons.arrow_back,
                           )),
@@ -183,7 +181,6 @@ class DetailScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }
