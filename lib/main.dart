@@ -15,9 +15,9 @@ void main() {
   runApp(MaterialApp(
       initialRoute: '/',
       routes:{
-        '/':(context) => HomeScreen(),
+        '/':(context) => SignUpScreen(),
         '/SignInScreen' : (context) => SignInScreen(),
-        '/SignUpScreen' : (context) => SignUpScreen(),
+        // '/SignUpScreen' : (context) => SignUpScreen(),
       }
   ));
 }
