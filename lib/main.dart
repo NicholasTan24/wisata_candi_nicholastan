@@ -15,9 +15,9 @@ void main() {
   runApp(MaterialApp(
       initialRoute: '/',
       routes:{
-        '/':(context) => SignUpScreen(),
+        '/':(context) => HomeScreen(),
         '/SignInScreen' : (context) => SignInScreen(),
-        // '/SignUpScreen' : (context) => SignUpScreen(),
+        '/SignUpScreen' : (context) => SignUpScreen(),
       }
   ));
 }
@@ -46,6 +46,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MainScreen(),
+        initialRoute: '/',
+        routes:{
+          '/':(context) => HomeScreen(),
+          '/SignInScreen' : (context) => SignInScreen(),
+          '/SignUpScreen' : (context) => SignUpScreen(),
+        }
     );
   }
 }

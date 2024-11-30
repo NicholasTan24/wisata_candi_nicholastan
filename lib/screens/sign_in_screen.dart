@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
@@ -20,6 +20,49 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isSignedIn = false;
 
   bool _obscurePassword = true;
+
+  void _signIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String savedUsername = prefs.getString('Username') ?? '';
+    final String savedPassword = prefs.getString('Password') ?? '';
+    final String enteredUsername = _usernameController.text.trim();
+    final String enteredPassword = _passwordController.text.trim();
+
+    if (enteredUsername.isEmpty || enteredPassword.isEmpty) {
+      setState(() {
+        _errorText = 'Nama pengguna dan kata sandi harus diisi.';
+      });
+      return;
+    }
+
+    if (savedUsername.isEmpty || savedPassword.isEmpty) {
+      setState(() {
+        _errorText =
+            'Pengguna belum terdaftar. Silahkan daftar terlebih dahulu.';
+      });
+      return;
+    }
+
+    if (enteredUsername == savedUsername && enteredPassword == savedPassword) {
+      setState(() {
+        _errorText = '';
+        _isSignedIn = true;
+        prefs.setBool('isSignedIn', true);
+      });
+      //Pemanggilan untuk menghapus semua halaman dalam tumpukan navigasi
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      });
+      //Sign In berhasil, navigasikan ke layar utama
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/');
+      });
+    } else {
+      setState(() {
+        _errorText = 'Nama pengguna atau kata sandi salah.';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +99,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
-                          _obscurePassword = ! _obscurePassword;
+                          _obscurePassword = !_obscurePassword;
                         });
                       },
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                     ),
                   ),
@@ -76,22 +121,22 @@ class _SignInScreenState extends State<SignInScreen> {
                 //     child: Text('Belum punya akun? Daftar di sini')),
                 RichText(
                     text: TextSpan(
-                      text: 'Belum punya akun?',
-                      style: TextStyle(fontSize: 16, color: Colors.deepPurple),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Daftar di sini.',
-                          style: TextStyle(
+                        text: 'Belum punya akun?',
+                        style:
+                            TextStyle(fontSize: 16, color: Colors.deepPurple),
+                        children: <TextSpan>[
+                      TextSpan(
+                        text: 'Daftar di sini.',
+                        style: TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
-                            fontSize: 16
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = (){},
-                        )
-                      ]
-                    )
-                )
+                            fontSize: 16),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, '/SignUpScreen');
+                          },
+                      )
+                    ]))
               ],
             )),
           ),
