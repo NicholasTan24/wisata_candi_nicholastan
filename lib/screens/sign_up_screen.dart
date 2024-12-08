@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
@@ -20,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _obscurePassword = true;
 
-  //TODO: 1.Membuat method _signUp
+  //TODO: 2.Membuat method _signUp
   void _signUp()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String name = _fullnameController.text.trim();
@@ -37,17 +37,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
       return;
     }
+    //TODO : 3.Jika nama, username, password tidak kosong lakukan enkripsi
+    if(name.isNotEmpty && username.isNotEmpty && password.isNotEmpty){
+      final encrypt.Key key = encrypt.Key.fromLength(32);
+      final iv = encrypt.IV.fromLength(16);
+      final encrypter = encrypt.Encrypter(encrypt.AES(key));
+      final encryptedName = encrypter.encrypt(name, iv: iv);
+      final encryptedUsername = encrypter.encrypt(name, iv: iv);
+      final encryptedPassword = encrypter.encrypt(name, iv: iv);
+
+      //simpan data pengguna di SharedPreferences
+      prefs.setString('fullname', encryptedName.base64);
+      prefs.setString('username', encryptedUsername.base64);
+      prefs.setString('password', encryptedPassword.base64);
+      prefs.setString('key', key.base64);
+      prefs.setString('iv', iv.base64);
+
+    }
     //simpan data pengguna di SharedPreferences
-    prefs.setString('Full Name', name);
-    prefs.setString('Username', username);
-    prefs.setString('Password', password);
+    // prefs.setString('Full Name', name);
+    // prefs.setString('Username', username);
+    // prefs.setString('Password', password);
 
     //buat navigasi ke signinscreen
     Navigator.pushReplacementNamed(context, '/SignInScreen');
   }
 
 
-  //TODO: 2.Membuat method dispose
+  //TODO: 4.Membuat method dispose
   @override
   void dispose(){
     //TODO: Implement dispose
