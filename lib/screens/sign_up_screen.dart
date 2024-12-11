@@ -43,8 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final iv = encrypt.IV.fromLength(16);
       final encrypter = encrypt.Encrypter(encrypt.AES(key));
       final encryptedName = encrypter.encrypt(name, iv: iv);
-      final encryptedUsername = encrypter.encrypt(name, iv: iv);
-      final encryptedPassword = encrypter.encrypt(name, iv: iv);
+      final encryptedUsername = encrypter.encrypt(username, iv: iv);
+      final encryptedPassword = encrypter.encrypt(password, iv: iv);
 
       //simpan data pengguna di SharedPreferences
       prefs.setString('fullname', encryptedName.base64);
@@ -126,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       obscureText: _obscurePassword,
                     ),
-                    // TODO: 8. Pasang ElevatedButton Sign In
+                    // TODO: 8. Pasang ElevatedButton Sign Up
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {
                       _signUp();

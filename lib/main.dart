@@ -13,11 +13,13 @@ import 'package:wisata_candi_nicholastan/screens/sign_up_screen.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes:{
-        '/':(context) => HomeScreen(),
+        '/':(context) => MainScreen(),
         '/SignInScreen' : (context) => SignInScreen(),
         '/SignUpScreen' : (context) => SignUpScreen(),
+        '/Profile' : (context) => SearchScreen(),
       }
   ));
 }
@@ -46,12 +48,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MainScreen(),
-        initialRoute: '/',
-        routes:{
-          '/':(context) => HomeScreen(),
-          '/SignInScreen' : (context) => SignInScreen(),
-          '/SignUpScreen' : (context) => SignUpScreen(),
-        }
     );
   }
 }
@@ -107,6 +103,10 @@ class _MainScreenState extends State<MainScreen> {
                 icon: Icon(Icons.favorite, color: Colors.deepPurple),
                 label: 'Favorite',
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, color: Colors.deepPurple),
+                label: 'Profile'
+              )
             ],
           ),
       ),

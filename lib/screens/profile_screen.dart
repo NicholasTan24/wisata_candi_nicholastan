@@ -1,4 +1,6 @@
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,6 +16,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String userName = '';
   int favoriteCandiCount = 0;
 
+  Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
+      Future<SharedPreferences> prefs)
+  async{
+    final sharedPreferences = await prefs;
+    final encryptedUsername = sharedPreferences.getString('username')?? '';
+    final encryptedPassword = sharedPreferences.getString('password')?? '';
+    final keyString = sharedPreferences.getString('key')?? '';
+    final ivString = sharedPreferences.getString('iv')?? '';
+    final encrypt.Key key = encrypt.Key.fromBase64(keyString);
+    final iv = encrypt.IV.fromBase64(ivString);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+    final decrytedUsername = encrypter.decrypt64(encryptedUsername, iv: iv);
+    final decryptedPassword = encrypter.decrypt64(encryptedPassword, iv: iv);
+    //mengembalikan data terdekripsi
+    return{'username': decrytedUsername, 'password':decryptedPassword};
+  }
   // TODO 5. Implementasi fungsi signIn
   void signIn(){
     // setState(() {
@@ -24,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // TODO 6. Implementasi fungsi signOut
   void signOut(){
     setState(() {
-      isSignedIn = !isSignedIn;
+      isSignedIn = false;
     });
   }
   @override

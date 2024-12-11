@@ -23,7 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _obscurePassword = true;
 
   Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
-      Future<SharedPreferences> prefs)
+      SharedPreferences prefs)
   async{
     final sharedPreferences = await prefs;
     final encryptedUsername = sharedPreferences.getString('username')?? '';
@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
       print('Sign in attempt');
       if (username.isNotEmpty && password.isNotEmpty) {
         final SharedPreferences prefs = await prefsFuture;
-        final data = await _retrieveAndDecryptDataFromPrefs(prefs as Future<SharedPreferences>);
+        final data = await _retrieveAndDecryptDataFromPrefs(prefs);
         if (data.isNotEmpty) {
           final decryptedUsername = data['username'];
           final decryptedPassword = data['password'];
@@ -127,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 // TODO: 7. Pasang ElevatedButton Sign In
                 SizedBox(height: 20),
-                ElevatedButton(onPressed: () {}, child: Text('Sign In')),
+                ElevatedButton(onPressed: () {_signIn();}, child: Text('Sign In')),
                 // TODO: 8.Pasang TextButton Sign Up
                 SizedBox(height: 10),
                 // TextButton(
