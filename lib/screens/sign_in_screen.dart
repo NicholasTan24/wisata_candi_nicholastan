@@ -25,6 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
       SharedPreferences prefs)
   async{
+    //enkripsi datanya
     final sharedPreferences = await prefs;
     final encryptedUsername = sharedPreferences.getString('username')?? '';
     final encryptedPassword = sharedPreferences.getString('password')?? '';
@@ -33,6 +34,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final encrypt.Key key = encrypt.Key.fromBase64(keyString);
     final iv = encrypt.IV.fromBase64(ivString);
     final encrypter = encrypt.Encrypter(encrypt.AES(key));
+    //dekripsi  datanya
     final decrytedUsername = encrypter.decrypt64(encryptedUsername, iv: iv);
     final decryptedPassword = encrypter.decrypt64(encryptedPassword, iv: iv);
     //mengembalikan data terdekripsi

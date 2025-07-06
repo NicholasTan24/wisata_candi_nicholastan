@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_candi_nicholastan/models/candi.dart';
+import 'package:wisata_candi_nicholastan/screens/favorite_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   final Candi candi;
@@ -32,9 +33,9 @@ class _DetailScreenState extends State<DetailScreen> {
   }
   void _loadFavoriteStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool favorite = prefs.getBool('favorite_${widget.candi.name}') ?? false;
+    List<String> favorite = prefs.getStringList('favorite')?? [];
     setState(() {
-      isFavorite = favorite;
+      isFavorite = favorite.contains(widget.candi.name);
     });
   }
   Future<void> _toggleFavorite() async {
@@ -48,9 +49,11 @@ class _DetailScreenState extends State<DetailScreen> {
       });
       return;
     }
-    bool favoriteStatus = !isFavorite;
-    prefs.setBool('favorite_${widget.candi.name}',favoriteStatus);
-  }
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+    prefs.setBool('favorite_${widget.candi.name}',isFavorite);
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +199,10 @@ class _DetailScreenState extends State<DetailScreen> {
                           return Padding(padding: EdgeInsets.only(right:8),
                             // bingkai
                             child: GestureDetector(
-                              onTap: (){},
+                              onTap: (){
+                                //Implementasi Hero animation
+
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),

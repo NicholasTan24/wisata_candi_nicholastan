@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
             itemBuilder: (context,index){
               return ItemCard(candi: candiList[index]);
-
             }
             ),
       // TODO: 3. Buat ItemCard sebagai return value dari GridView.builder

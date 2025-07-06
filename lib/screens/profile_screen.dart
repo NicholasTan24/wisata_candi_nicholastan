@@ -16,22 +16,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String userName = '';
   int favoriteCandiCount = 0;
 
-  Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
-      Future<SharedPreferences> prefs)
+  Future<void>_LoadDataFromPrefs()
   async{
-    final sharedPreferences = await prefs;
-    final encryptedUsername = sharedPreferences.getString('username')?? '';
-    final encryptedPassword = sharedPreferences.getString('password')?? '';
-    final keyString = sharedPreferences.getString('key')?? '';
-    final ivString = sharedPreferences.getString('iv')?? '';
-    final encrypt.Key key = encrypt.Key.fromBase64(keyString);
-    final iv = encrypt.IV.fromBase64(ivString);
-    final encrypter = encrypt.Encrypter(encrypt.AES(key));
-    final decrytedUsername = encrypter.decrypt64(encryptedUsername, iv: iv);
-    final decryptedPassword = encrypter.decrypt64(encryptedPassword, iv: iv);
-    //mengembalikan data terdekripsi
-    return{'username': decrytedUsername, 'password':decryptedPassword};
+    //enkripsi datanya
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      fullName = prefs.getString('fullname') ?? '';
+      userName = prefs.getString('username') ?? '';
+    });
   }
+
   // TODO 5. Implementasi fungsi signIn
   void signIn(){
     // setState(() {
@@ -40,11 +34,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Navigator.pushNamed(context, '/SignInScreen');
   }
   // TODO 6. Implementasi fungsi signOut
-  void signOut(){
+
+  Future<void> signOut()async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isSignedIn', false);
+    await prefs.setString('name', '');
+    await prefs.setString('username', '');
+    await prefs.setString('password', '');
+    Navigator.pushReplacementNamed(context, '/SignInScreen');
+  }
+  Future<void> _editFullName(String newName) async {
+    final prefs = await SharedPreferences.getInstance();
+    // Encrypt the name before saving
+    final encryptedFullname = _encryptData(newName);
+
+    await prefs.setString('name', encryptedFullname);
     setState(() {
-      isSignedIn = false;
+      fullName= encryptedFullname;
     });
   }
+
+  String _encryptData(String data) {
+    final key = encrypt.Key.fromLength(32);
+    final iv = encrypt.IV.fromLength(16);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final encrypted = encrypter.encrypt(data, iv: iv);
+    return encrypted.base64;
+  }
+
+  String _decryptData(String encryptedData) {
+    final key = encrypt.Key.fromLength(32);
+    final iv = encrypt.IV.fromLength(16);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final decrypted = encrypter.decrypt64(encryptedData, iv: iv);
+    return decrypted;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +138,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: 18),
                       ),
                     ),
-                    if(isSignedIn) Icon(Icons.edit),
+                    if(isSignedIn)
+                      IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed:(){_editFullName(fullName);}
+                      )
                   ],
                 ),
                 // Baris Nama
@@ -135,7 +167,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: 18),
                       ),
                     ),
-                    if(isSignedIn) Icon(Icons.edit),
+                    if(isSignedIn)
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: (){},
+                      )
                   ],
                 ),
                 // Baris Favorit
@@ -168,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(height: 4),
                 Divider(color: Colors.deepPurple[100]),
                 SizedBox(height: 20),
-                isSignedIn ? TextButton(onPressed: signOut, child: Text('Sign Out'))
+                isSignedIn ? TextButton(onPressed: (){signOut();}, child: Text('Sign Out'))
                     : TextButton(onPressed: signIn, child: Text('Sign In')),
               ],
             ),
